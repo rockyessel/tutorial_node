@@ -1,0 +1,22 @@
+{
+  "name": "tutorial_node",
+  "version": "1.0.0",
+  "description": "This is a tutorial for nodejs.",
+  "main": "10-fs-sync.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eoincarrick/tutorial_node.git"
+  },
+  "author": "Eoin Carrick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eoincarrick/tutorial_node/issues"
+  },
+  "homepage": "https://github.com/eoincarrick/tutorial_node#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
