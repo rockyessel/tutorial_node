@@ -1,0 +1,10 @@
+const http = require('http');
+const port = 3000;
+
+const server = http.createServer();
+
+server.on('request', function (request, response) {
+  response.end('Hello World');
+});
+
+server.listen(port);
