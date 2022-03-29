@@ -19,6 +19,7 @@
   "homepage": "https://github.com/eoincarrick/tutorial_node#readme",
   "dependencies": {
     "bootstrap": "^5.1.3",
+    "express": "^4.17.3",
     "lodash": "^4.17.21"
   }
 }

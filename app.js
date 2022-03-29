@@ -1,10 +1,14 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 const port = 3000;
 
-const server = http.createServer();
-
-server.on('request', function (request, response) {
-  response.end('Hello World');
+app.listen(port, function () {
+  console.log(`Server is listening on port ${port}`);
 });
-
-server.listen(port);
+//app.get
+//app.post
+//app.put
+//app.delete
+//app.all
+//app.use
+//app.listen
