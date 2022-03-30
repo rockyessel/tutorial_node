@@ -22,14 +22,14 @@ app.get('/api/people', function (request, response) {
 });
 
 app.post('/api/people', function (request, response) {
-  // const { name } = request.body;
-  console.log(request.body);
-  // if (!name) {
-  //   return response
-  //     .status(400)
-  //     .json({ success: false, msg: 'Missing required parameter: name' });
-  // }
-  response.status(201).json({ success: true });
+  const { name } = request.body;
+  console.log(request);
+  if (!name) {
+    return response
+      .status(400)
+      .json({ success: false, msg: 'Missing required parameter: name' });
+  }
+  response.status(201).json({ success: true, person: name });
 });
 
 app.post('/login', function (request, response) {
