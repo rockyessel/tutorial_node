@@ -27,6 +27,8 @@ app.get('/api/products/:productID', function (request, response) {
     (product) => product.id === Number(productID)
   );
 
+  //The find() method return the first string inside an array or object.
+
   console.log(singleProduct);
 
   if (!singleProduct) {

@@ -301,17 +301,12 @@ const products = [
   },
 ];
 
-const people = products.map((name_id, index) => {
-  const { id, username } = name_id;
-  return { id, username };
-});
+const people = [
+  { id: 1, name: `Carrick` },
+  { id: 2, name: `John` },
+  { id: 3, name: `Eoin` },
+  { id: 4, name: `Michael` },
+  { id: 5, name: `Sera` },
+];
 
 module.exports = { products, people };
-
-// [
-//   { id: 1, name: `Carrick` },
-//   { id: 2, name: `John` },
-//   { id: 3, name: `Eoin` },
-//   { id: 4, name: `Michael` },
-//   { id: 5, name: `Sera` },
-// ];
