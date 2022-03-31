@@ -1,13 +1,18 @@
 const express = require('express');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 //Load config
-dotenv.config(path:)
+dotenv.config({ path: './config/config.env' });
+
+//Connecting DB
+connectDB();
 
 const app = express();
 
-
-const port = false || 3000;
-app.listen(port, () => {
-  console.log(`Express server is running on port: ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(
+    `Server is running in ${process.env.NODE_ENV} mode port: ${PORT}`
+  );
 });
