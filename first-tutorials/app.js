@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 4000;
 let { people } = require('./data.js');
 
 app.use(express.static('./method-public'));
@@ -16,20 +16,20 @@ app.use(express.urlencoded({ extended: false }));
 //express definition of urlencoding
 // is a method inbuilt in express to recognize the incoming Request Object as strings or arrays.
 // This method is called as a middleware in your application using the code: app.use(express.urlencoded());
+app.use(express());
 
 app.get('/api/people', function (request, response) {
   response.status(200).json({ success: true, data: people });
 });
 
-app.post('/api/people', function (request, response) {
-  const { name } = request.body;
-  console.log(request);
+app.post('/api/people', (req, res) => {
+  const { name } = req.body;
   if (!name) {
-    return response
+    return res
       .status(400)
-      .json({ success: false, msg: 'Missing required parameter: name' });
+      .json({ success: false, msg: 'please provide name value' });
   }
-  response.status(201).json({ success: true, person: name });
+  res.status(201).json({ success: true, person: name });
 });
 
 app.post('/login', function (request, response) {
@@ -44,6 +44,6 @@ app.post('/login', function (request, response) {
   }
 });
 
-app.listen(port || 3000, function (request, response) {
-  console.log(`Server is running on: https://localhost:${port || 3000}`);
+app.listen(port || 4000, function (request, response) {
+  console.log(`Server is running on: https://localhost:${port || 4000}`);
 });
