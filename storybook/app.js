@@ -13,7 +13,7 @@ dotenv.config({ path: './config/config.env' });
 // Passport Config
 require('./config/passport')(passport);
 
-// Connecting DB
+// Connected DB
 connectDB();
 
 const app = express();
@@ -48,6 +48,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/', require('./routes/index'));
+app.use('/auth', require('./routes/auth'));
 
 // Static
 app.use(express.static(path.join(__dirname, './public')));
