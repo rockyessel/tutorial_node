@@ -17,7 +17,6 @@ const getGoal = asyncHandler(async (request, response) => {
 // @desc Post/Create/Set Goals
 // @route POST/api/goals
 // @access Private
-
 const postGoal = asyncHandler(async (request, response) => {
   const { text } = request.body;
   if (!text || text === '') {
@@ -29,6 +28,7 @@ const postGoal = asyncHandler(async (request, response) => {
   });
   response.status(200).json(goal);
 });
+
 // @desc Put/Change/Updates Goals
 // @route PUT/api/goals/:id
 // @access Private
