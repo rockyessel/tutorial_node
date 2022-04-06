@@ -14,6 +14,7 @@ router.route('/:id').put(putGoal).delete(deleteGoal);
 // router.get('/', getGoal);
 // router.post('/', postGoal);
 
+// @desc we cleaned up at code number "11"
 // router.put('/:id', putGoal);
 // router.delete('/:id', deleteGoal);
 
