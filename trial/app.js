@@ -1,14 +1,18 @@
 const express = require('express');
+const connectDB = require('./config/db.js');
+const app = express();
+const dotenv = require('dotenv');
 const {
   getEmail,
   postEmail,
   putEmail,
   deleteEmail,
 } = require('./controller/email.js');
-const connectDB = require('./config/db.js');
-const app = express();
 
 const port = 3000;
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 dotenv.config({ path: '.env' });
 connectDB();
