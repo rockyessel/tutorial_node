@@ -1,6 +1,7 @@
 const express = require('express');
 const colors = require('colors');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 const path = require('path');
 const connectDB = require('./config/db.js');
 const { errorHandle } = require('./middleware/errorMiddleware.js');
@@ -14,6 +15,7 @@ dotenv.config({ path: '.env' });
 connectDB();
 
 // @desc Middleware
+app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
