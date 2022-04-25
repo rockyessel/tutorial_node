@@ -27,6 +27,7 @@ app.use('/api/users', require('./routes/userRoutes'));
 // @desc Middleware
 app.use(errorHandle);
 
+// @desc express port
 app.listen(port, () =>
   console.log(`Server running on: http//:localhost:${port}`)
 );

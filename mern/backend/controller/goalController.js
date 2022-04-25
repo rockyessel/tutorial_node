@@ -19,7 +19,7 @@ const getGoal = asyncHandler(async (request, response) => {
 // @access Private
 const postGoal = asyncHandler(async (request, response) => {
   const { text } = request.body;
-  if (!text) {
+  if (!text || text === '' || text.trim().length <= 0) {
     throw new Error('Please, all field is required');
   }
   console.log(text);
@@ -37,7 +37,7 @@ const putGoal = asyncHandler(async (request, response) => {
   const goal = await Goal.findById(id);
   console.log(id);
   console.log(request.body);
-  if (!goal || goal === '' || !id || id === '') {
+  if (!goal) {
     response.status(400);
     throw new Error('Goal not found');
   }
