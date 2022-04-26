@@ -4,19 +4,28 @@ const User = require('../models/userModel');
 
 const protect = asyncHandler(async (request, response, next) => {
   let token;
-  console.log(request);
+  console.log('Request:', request);
+  console.log('RequestHeaders:', request.headers);
+  console.log('RequestHeadersAuthorization:', request.headers.authorization);
+  console.log(
+    'RequestHeadersAuthorizationSplit:',
+    request.headers.authorization.split(' ')
+  );
 
+  // @desc Checking if the "request.headers.authorization" and "request.headers.authorization.startsWith('Bearer')" exist.
   if (
     request.headers.authorization &&
-    request.headers.authorization.startsWith('Bearer ')
+    request.headers.authorization.startsWith('Bearer')
   ) {
+    // @desc if they exist, get the token value, verify it, and get the token from the user.
     try {
       // @desc Getting the token inside the "request.headers.authorization"
       token = request.headers.authorization.split(' ')[1];
+      console.log('token:', token);
 
       // @desc After getting the token, we verify it.
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decoded);
+      console.log('Decoded:', decoded);
 
       // @desc Get user from token
       const user = await User.findById(decoded.id).select('-password');
