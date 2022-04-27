@@ -26,8 +26,6 @@ const registerUser = asyncHandler(async (request, response) => {
   // @desc Hash password
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
-  console.log(password);
-  console.log(hashPassword);
 
   // @desc creating a new user
   const user = await User.create({
@@ -39,7 +37,7 @@ const registerUser = asyncHandler(async (request, response) => {
   if (user) {
     response.status(201);
     response.json({
-      _id: user._id,
+      _id: user.id,
       name: user.name,
       email: user.email,
       token: generateJWT(user._id),
@@ -70,7 +68,7 @@ const loginUser = asyncHandler(async (request, response) => {
   // in this (**bcrypt.compare(password, user.password)**)
   if (email && bcrypt.compare(password, user.password)) {
     response.json({
-      _id: user._id,
+      _id: user.id,
       name: user.name,
       email: user.email,
       token: generateJWT(user._id),
@@ -85,13 +83,11 @@ const loginUser = asyncHandler(async (request, response) => {
 // @route Method: GET ('/api/users/me')
 // @access Private
 const getMe = asyncHandler(async (request, response) => {
-  response.json({
-    message: 'User data display',
-  });
+  response.status(200).json(request.user);
 });
-
 // @desc Generate JSON Web Token(JWT)
 const generateJWT = (id) => {
+  console.log('id:', id);
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
