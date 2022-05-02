@@ -14,6 +14,7 @@ dotenv.config({ path: '.env' });
 // @desc connecting to Database🍡
 connectDB();
 
+
 // @desc Middleware
 app.use(morgan('tiny'));
 app.use(express.json());

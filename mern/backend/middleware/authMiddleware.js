@@ -20,7 +20,7 @@ const protect = asyncHandler(async (request, response, next) => {
       // console.log('Decoded:', decoded);
 
       // @desc Get user from token
-      const user = await User.findById(decoded.id).select('-password');
+      request.user = await User.findById(decoded.id).select('-password');
       // console.log('user:', user);
 
       next();
