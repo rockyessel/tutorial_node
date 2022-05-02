@@ -6,9 +6,10 @@ const {
   putGoal,
   deleteGoal,
 } = require('../controller/goalController.js');
+const { protect } = require('../middleware/authMiddleware.js');
 
-router.route('/').get(getGoal).post(postGoal);
-router.route('/:id').put(putGoal).delete(deleteGoal);
+router.route('/').get(protect, getGoal).post(protect, postGoal);
+router.route('/:id').put(protect, putGoal).delete(protect, deleteGoal);
 
 // @desc we cleaned up at code number "10"
 // router.get('/', getGoal);
