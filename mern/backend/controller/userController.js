@@ -10,7 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   // @desc Checking if any of the request.body is an empty string
-  if (!name || !email || !password) {
+  if (!email || !name || !password) {
     res.status(400);
     throw new Error('Please add all fields');
   }
@@ -60,7 +60,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   // @desc if the user doesn't exist, throw a new error
   if (!user) {
-    response.status(404);
+    res.status(404);
     throw new Error('User not found');
   }
 
@@ -76,7 +76,6 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid credentials');
   }
 });
-
 
 // @desc Get user data
 // @route Method: GET ('/api/users/me')

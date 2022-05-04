@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const connectDB = require('./config/db.js');
 const { errorHandle } = require('./middleware/errorMiddleware.js');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 const app = express();
 
@@ -13,7 +13,6 @@ dotenv.config({ path: '.env' });
 
 // @desc connecting to Database🍡
 connectDB();
-
 
 // @desc Middleware
 app.use(morgan('tiny'));
