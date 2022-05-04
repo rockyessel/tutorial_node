@@ -62,6 +62,7 @@ const putGoal = asyncHandler(async (request, response) => {
   console.log('the goal user:', goal.user.toString());
   console.log('user:', user.id);
 
+  // Checking if the user id is a match to the user id in the database
   if (goal.user.toString() !== user.id) {
     response.status(401);
     throw new Error('User not authorized');
