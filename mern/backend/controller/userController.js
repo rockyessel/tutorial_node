@@ -51,6 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 // @desc Authenticate/Logging-in a user
 // @route Method: POST ('/api/users/login')
+// "Post" because we are taking information from the user, and verifying them.
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
