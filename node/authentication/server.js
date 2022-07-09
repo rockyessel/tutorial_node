@@ -13,12 +13,13 @@ dotenv.config({ path: '.env' });
 connectDB();
 
 // @desc Express middleware
-app.use(morgan('combined', { stream: true }));
+app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // @desc Routes middleware
 app.use('/user', require('./routes/user.js'));
+app.use('/question', require('./routes/question.js'));
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
