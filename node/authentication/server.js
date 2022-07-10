@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const connectDB = require('./config/database.js');
 const PORT = process.env.PORT || 4000;
 
@@ -13,6 +14,7 @@ dotenv.config({ path: '.env' });
 connectDB();
 
 // @desc Express middleware
+app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

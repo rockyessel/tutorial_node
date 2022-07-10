@@ -7,7 +7,7 @@ const getEmail = async (request, response) => {
 
 const postEmail = async (request, response) => {
   const { email } = request.body;
-  const emails = await Email.create({ user_email: email });
+  const emails = await Email.create({ email });
   console.log(email);
   response.json(emails);
 };

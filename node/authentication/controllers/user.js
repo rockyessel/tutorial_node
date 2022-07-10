@@ -1,5 +1,6 @@
 const User = require('../models/user.js');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const os = require('node:os');
 
 // @desc Admin controllers //
@@ -100,6 +101,10 @@ const registerUser = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
 
+    if (!name || !username || !email || !password) {
+      return res.status(400).json({ error: 'Username or email is required' });
+    }
+
     const usernameExists = await User.findOne({ username });
     const emailExists = await User.findOne({ email });
 
@@ -107,10 +112,6 @@ const registerUser = async (req, res) => {
       return res
         .status(400)
         .json({ error: 'Username or email already exists' });
-    }
-
-    if (!name || !username || !email || !password) {
-      return res.status(400).json({ error: 'Username or email is required' });
     }
 
     const salt = await bcryptjs.genSalt(10);
@@ -126,7 +127,18 @@ const registerUser = async (req, res) => {
       platform: os.platform(),
     });
 
-    res.status(201).json({ user });
+    if (user) {
+      res.status(201).json({
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        password: hashedPassword,
+        token: generateToken(user._id),
+        arch: os.arch(),
+        homedir: os.homedir(),
+        platform: os.platform(),
+      });
+    }
   } catch (error) {
     console.log(error);
     throw new Error('Server error: ' + error.message);
@@ -165,6 +177,7 @@ const loginUser = async (req, res) => {
         name: usernameExists.name,
         email: usernameExists.email,
         password: usernameExists.password,
+        token: generateToken(usernameExists._id),
         arch: os.arch(),
         homedir: os.homedir(),
         platform: os.platform(),
@@ -184,6 +197,14 @@ const loginUser = async (req, res) => {
 const userInfo = async (req, res) => {
   res.status(200).json({
     on_profile_page: true,
+    user: req.user,
+  });
+};
+
+// @desc Generate JSON Web Token(JWT)
+const generateToken = (id) => {
+  return jwt.sign({ id }, 'JWT_SECRET', {
+    expiresIn: '30d',
   });
 };
 

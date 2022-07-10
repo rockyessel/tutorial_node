@@ -10,6 +10,8 @@ const {
   userInfo,
 } = require('../controllers/user.js');
 
+const { protect } = require('../middlewares/auth');
+
 // @desc Admin routes
 router.route('/admin').get(getUsers).post(createUser);
 router.route('/admin/:id').put(updateUser).delete(deleteUser);
@@ -17,6 +19,6 @@ router.route('/admin/:id').put(updateUser).delete(deleteUser);
 // @desc Visitors routes
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/profile', userInfo);
+router.get('/profile', protect, userInfo);
 
 module.exports = router;
