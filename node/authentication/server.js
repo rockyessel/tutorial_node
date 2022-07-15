@@ -26,3 +26,20 @@ app.use('/question', require('./routes/question.js'));
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+function a(n) {
+  var count = 0;
+  for (var i = 0; i < n; i++) {
+    count += 1;
+  }
+  console.log(count)
+  
+  for (var i = 0; i < 5 * n; i++) {
+    count += 1;
+  }
+  console.log(count)
+
+  return count;
+}
+
+console.log(a(10))
