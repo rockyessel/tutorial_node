@@ -5,7 +5,7 @@ const {getFiles,postImages} = require('../controllers/files')
 
 
 router.get('/',getFiles)
-router.post('/images',upload.array('profile',4), postImages)
+router.post('/images',upload.single('profile'), postImages)
 
 
 

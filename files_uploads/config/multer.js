@@ -4,7 +4,7 @@ const storage = multer.diskStorage({
     destination: (request, file, callback) => {
         callback(null, './uploads/images')
     },
-    filename: (request, file, callback)=>{
+    filename: (request, file, callback) => {
         callback(null, file.originalname)
 }
 })
