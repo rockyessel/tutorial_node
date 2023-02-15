@@ -1,10 +1,3 @@
-const express = require('express');
-const PORT = process.env.PORT || 4000;
-const app = express();
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 const all_files = [
   {
     _id: '63ebfcaee659cfefc976caa6',
@@ -29,7 +22,7 @@ const all_files = [
     file_url: 'http://localhost:8200/uploads/images/1676427940937-v.PNG',
     identifier: '3Rerq',
     type: 'image',
-    createdAt: '2023-02-15T18:25:40.973Z',
+    createdAt: '2023-02-14T18:25:40.973Z',
     updatedAt: '2023-02-14T18:25:40.973Z',
     __v: 0,
   },
@@ -38,7 +31,7 @@ const all_files = [
     file_url: 'http://localhost:6000/uploads/images/1676462890418-v.PNG',
     identifier: 'A95r1',
     type: 'image',
-    createdAt: '2023-02-15T18:08:10.477Z',
+    createdAt: '2023-02-14T18:08:10.477Z',
     updatedAt: '2023-02-14T18:08:10.477Z',
     __v: 0,
   },
@@ -47,7 +40,7 @@ const all_files = [
     file_url: 'http://localhost:6000/uploads/images/1676463097617-v.PNG',
     identifier: 'bawgd',
     type: 'image',
-    createdAt: '2023-02-15T18:11:37.652Z',
+    createdAt: '2023-02-14T18:11:37.652Z',
     updatedAt: '2023-02-14T18:11:37.652Z',
     __v: 0,
   },
@@ -58,27 +51,18 @@ all_files.map((file) => {
 
   const expire_date = next_day(new Date(file.createdAt), 1).toISOString();
 
-  const today_in_ms = new Date().getTime();
+  const today_in_ms = new Date().getTime;
 
   const expire_date_ms = new Date(expire_date).getTime();
-  // console.log('expire_date_ms', expire_date_ms, file.identifier);
 
-  const expect_expire_date = expire_date_ms - createdAt_ms;
-  // console.log('expect_expire_date', expect_expire_date, file.identifier);
+  const difference_in_ms = expire_date_ms - createdAt_ms;
 
-  const difference_in_ms = today_in_ms - createdAt_ms;
-
-  console.log('difference_in_ms', difference_in_ms, file.XAZXSZidentifier);
-  const difference_in_days = Math.floor(difference_in_ms / expect_expire_date);
-
-  // console.log('difference_in_days', difference_in_days);
+  const difference_in_days = Math.floor(
+    difference_in_ms / (24 * 60 * 60 * 1000)
+  );
 
   if (difference_in_days >= 1) {
-    console.log(file);
-    // axios.delete('url/file.identifier')
-    //
-
-    // console.log('difference_in_days', difference_in_days, file.identifier);
+    console.log('difference_in_days', difference_in_days);
     // console.log('file', file);
   }
 });
@@ -103,7 +87,3 @@ function next_day(createdAt_date, number_of_days) {
 
   return nextDay;
 }
-
-app.listen(PORT, () => {
-  console.log('Express server listening on port');
-});
