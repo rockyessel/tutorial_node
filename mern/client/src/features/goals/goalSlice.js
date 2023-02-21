@@ -1,12 +1,61 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import goalService from './goalService';
 
+const initialState = {
+  goals: new Array(),
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: '',
+};
+
 // Create goals
-const createGoal = createAsyncThunk(
-  'auth/create-goals',
-  async (goal, thunkAPI) => {
+export const createGoal = createAsyncThunk(
+  'goals/create',
+  async (goalData, thunkAPI) => {
     try {
-      return await goalService.create(goal);
+      const token = thunkAPI.getState().auth.user.token;
+      return await goalService.createGoal(goalData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get Goals
+export const getGoals = createAsyncThunk(
+  'goals/getAll',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await goalService.getGoals(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Delete Goals
+export const deleteGoal = createAsyncThunk(
+  'goals/delete',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await goalService.deleteGoal(token, id);
     } catch (error) {
       const message =
         (error.response &&
@@ -22,45 +71,56 @@ const createGoal = createAsyncThunk(
 
 export const goalSlice = createSlice({
   name: 'goal',
+  initialState,
+  reducers: { reset: (state) => initialState },
   extraReducers: (builder) => {
     builder
-      // Register Builder
+      // Create Goal Builder
       .addCase(createGoal.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(createGoal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = action.payload;
+        state.goals.push(action.payload);
       })
       .addCase(createGoal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.user = null;
+      })
+      // Get Goals Builder
+      .addCase(getGoals.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getGoals.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.goals = action.payload;
+      })
+      .addCase(getGoals.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      // Delete Goals Builder
+      .addCase(deleteGoal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteGoal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.goals = state.goals.filter(
+          (goal) => goal._id !== action.payload.id
+        );
+      })
+      .addCase(deleteGoal.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
-    // Login Builder
-    //   .addCase(login.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(login.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isSuccess = true;
-    //     state.user = action.payload;
-    //   })
-    //   .addCase(login.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = true;
-    //     state.message = action.payload;
-    //     state.user = null;
-    //   })
-    //   // Logout Builder
-    //   .addCase(logout.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(logout.fulfilled, (state) => {
-    //     state.user = null;
-    //     state.isLoading = false;
-    //   });
   },
 });
+
+export const { reset } = goalSlice.actions;
+export default goalSlice.reducer;
