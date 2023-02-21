@@ -11,9 +11,9 @@ const User = require('../models/userModel');
 // @route GET/api/goals
 // @access Private
 const getGoal = asyncHandler(async (request, response) => {
-  const goals = await Goal.find({ user: request.user.id });
+  // const goals = await Goal.find({ user: request.user.id });
 
-  response.status(200).json(goals);
+  response.status(200).json(request.user);
 });
 
 // @desc Post/Create/Set Goals
@@ -43,7 +43,7 @@ const putGoal = asyncHandler(async (request, response) => {
   const { id } = request.params;
 
   const goal = await Goal.findById(id);
-  const user = await User.findById(request.user.id);
+  const user = request.user
 
   console.log(id);
 
@@ -85,7 +85,7 @@ const deleteGoal = asyncHandler(async (request, response) => {
   }
 
   const goal = await Goal.findById(id);
-  const user = await User.findById(request.user.id);
+  const user = request.user;
 
   if (!user) {
     response.status(401);
